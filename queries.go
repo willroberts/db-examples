@@ -4,9 +4,6 @@ var (
 	// CreateDatabase creates a test database in MariaDB.
 	CreateDatabase = "CREATE DATABASE IF NOT EXISTS test_database"
 
-	// UseDatabase switches to the test database in MariaDB.
-	UseDatabase = "USE test_database"
-
 	// CreateTable creates a table with two columns: id (int) and value (varchar(32)).
 	CreateTable = "CREATE TABLE IF NOT EXISTS test_table (id int, value varchar(32))"
 
