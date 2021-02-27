@@ -27,30 +27,24 @@ func main() {
 	}
 
 	// Perform some queries.
-	r, err := db.Query(databases.CreateTable, nil)
+	_, err = db.Exec(databases.CreateTable)
 	if err != nil {
 		log.Fatal("db.create:", err)
 	}
-	for r.Next() {
-		// Scanning the rows persists the query.
-	}
 
-	r, err = db.Query(databases.Insert, 1, "test record")
+	_, err = db.Exec(databases.Insert, 1, "test record")
 	if err != nil {
 		log.Fatal("db.insert:", err)
 	}
-	for r.Next() {
-		// Scanning the rows persists the query.
-	}
 
-	r, err = db.Query(databases.Select, nil)
+	rows, err := db.Query(databases.Select, nil)
 	if err != nil {
 		log.Fatal("db.select:", err)
 	}
-	for r.Next() {
+	for rows.Next() {
 		var id int
 		var value string
-		if err := r.Scan(&id, &value); err != nil {
+		if err := rows.Scan(&id, &value); err != nil {
 			log.Fatal("db.select.scan:", err)
 		}
 		log.Println("db.select.id:", id)

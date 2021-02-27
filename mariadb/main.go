@@ -15,11 +15,10 @@ func init() {
 		log.Fatal("sql.open:", err)
 	}
 	defer db.Close()
-	r, err := db.Query(databases.CreateDatabase)
+	_, err = db.Exec(databases.CreateDatabase)
 	if err != nil {
 		log.Fatal("db.create_database:", err)
 	}
-	_ = r
 }
 
 func main() {
@@ -35,19 +34,17 @@ func main() {
 	}
 
 	// Perform some queries.
-	r, err := db.Query(databases.CreateTable)
+	_, err = db.Exec(databases.CreateTable)
 	if err != nil {
 		log.Fatal("db.create_table:", err)
 	}
-	_ = r
 
-	r, err = db.Query(databases.Insert, 1, "test record")
+	_, err = db.Exec(databases.Insert, 1, "test record")
 	if err != nil {
 		log.Fatal("db.insert:", err)
 	}
-	_ = r
 
-	r, err = db.Query(databases.Select)
+	r, err := db.Query(databases.Select)
 	if err != nil {
 		log.Fatal("db.select:", err)
 	}
