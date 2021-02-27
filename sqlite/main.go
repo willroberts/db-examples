@@ -8,9 +8,14 @@ import (
 	"github.com/willroberts/databases"
 )
 
+const (
+	fileDB     = "db.sql"
+	inMemoryDB = ":memory:"
+)
+
 func main() {
 	// Use SQLite3 as a file-backed SQL database.
-	db, err := sql.Open("sqlite3", "db.sql")
+	db, err := sql.Open("sqlite3", fileDB) // Use inMemoryDB for in-memory mode.
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -53,5 +58,5 @@ func main() {
 	}
 
 	// Print connection statistics.
-	databases.PrintStats("fileDB", db.Stats())
+	databases.PrintStats("sqlite3", db.Stats())
 }

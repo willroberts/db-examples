@@ -62,5 +62,5 @@ func main() {
 	}
 
 	// Print connection statistics.
-	databases.PrintStats("sqlite3 in-memory database", db.Stats())
+	databases.PrintStats("mariadb", db.Stats())
 }
