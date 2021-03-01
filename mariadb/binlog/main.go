@@ -16,6 +16,9 @@ const (
 	maxLen = 256
 )
 
+// These suffixes may appear in binlogs after valid statements.
+var ignoredSuffixes = []string{"^", "NxDF"}
+
 type Query struct {
 	Query    string
 	Database string
@@ -46,13 +49,12 @@ func ParseBinlogs(strs []string) []Query {
 	return queries
 }
 
-// TrimTrailingJunk removes some binlog-specific trailing characters from strings.
-func TrimTrailingJunk(in string) string {
-	if strings.HasSuffix(in, "^") {
-		return in[:len(in)-1]
-	}
-	if strings.HasSuffix(in, "NxDF") {
-		return in[:len(in)-4]
+// TrimIgnoredSuffixes removes some binlog-specific trailing characters from strings.
+func TrimIgnoredSuffixes(in string) string {
+	for _, s := range ignoredSuffixes {
+		if strings.HasSuffix(in, s) {
+			in = in[:len(in)-len(s)]
+		}
 	}
 	return in
 }
@@ -93,7 +95,7 @@ func GetStrings(filename string) ([]string, error) {
 			// If we encounter a non-ASCII character, save what we read and move on.
 			if !strconv.IsPrint(r) || r > 0xFF {
 				if len(runes) >= minLen {
-					results = append(results, TrimTrailingJunk(string(runes)))
+					results = append(results, TrimIgnoredSuffixes(string(runes)))
 				}
 				runes = runes[0:0] // Reset the buffer.
 				continue
