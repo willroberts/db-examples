@@ -1,7 +1,6 @@
 # databases
 
-I'm not much of a database person, but I felt like playing with SQLite and
-MariaDB binlogs.
+Minimal examples of SQLite interaction and MariaDB binlog parsing in Go.
 
 ## MariaDB Setup
 
