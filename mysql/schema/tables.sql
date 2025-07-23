@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS mytable;
+
+CREATE TABLE mytable (
+	id INT AUTO_INCREMENT NOT NULL,
+	value INT NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
